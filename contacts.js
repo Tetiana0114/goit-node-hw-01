@@ -27,7 +27,7 @@ async function getContactById(contactId) {
 }
 
 async function removeContact(contactId) {
-    const contacts = readContacts();
+    const contacts = await readContacts();
     const updatedContacts = contacts.filter((contact) => contact.id !== contactId);
     await writeContacts(updatedContacts);
 }
