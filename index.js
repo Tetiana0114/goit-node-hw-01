@@ -1,4 +1,18 @@
+const { Command } = require("commander");
 const { addContact, listContacts, removeContact, getContactById } = require("./contacts");
+
+const program = new Command();
+
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
 
 async function invokeAction({ action, name, email, phone, id }) {
   switch (action) {
@@ -18,11 +32,8 @@ async function invokeAction({ action, name, email, phone, id }) {
       break;
 
       default:
-          break;
+      console.warn("\x1B[31m Unknown action type!");
   }
 }
 
-// invokeAction({ action: "add", name: "Lewis", email: "lewis@mail.com", phone: "333 333 333" });
-// invokeAction({ action: "list" });
-// invokeAction({ action: "get", id: "1" });
-// invokeAction({ action: "remove", id: "4ca0" });
+invokeAction(argv);
